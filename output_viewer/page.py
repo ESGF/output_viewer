@@ -1,7 +1,7 @@
 from .htmlbuilder import Document, Table, TableCell, Link, Span
 import os
 from .examine import is_img, is_data
-from .utils import slugify, nuke_and_pave
+from .utils import slugify, nuke_and_pave, rechmod
 
 
 class Column(object):
@@ -103,12 +103,13 @@ class Group(object):
 
     def build(self, toolbar):
         nuke_and_pave(self.dirpath)
+
         for r in self.rows:
             r.build(toolbar)
 
 
 class Page(object):
-    def __init__(self, spec, root_path="./"):
+    def __init__(self, spec, root_path="./", permissions=None):
         self.name = spec.get("title", "")
         self.short_name = spec.get("short_name", None)
 
@@ -127,6 +128,7 @@ class Page(object):
                 self.number_of_cols = max(len(g["columns"]), self.number_of_cols)
                 self.groups.append(g)
         self.root_path = root_path
+        self.permissions = permissions
         self.description = spec.get("description", "")
         self.icon = spec.get("icon", None)
         self.rows = spec.get("rows", [])
@@ -200,4 +202,8 @@ class Page(object):
         with open(os.path.join(self.root_path, dirname, "index.html"), "w") as outfile:
             if toolbar is not None:
                 toolbar.setLevel(1)
+
             outfile.write(doc.build())
+
+        if self.permissions is not None:
+            rechmod(os.path.join(self.root_path, dirname), self.permissions)

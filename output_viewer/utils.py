@@ -18,3 +18,11 @@ def nuke_and_pave(path):
     if os.path.exists(path):
         shutil.rmtree(path)
     os.mkdir(path)
+
+
+def rechmod(path, perms):
+    for path, dirs, files in os.walk(path):
+        for f in [os.path.join(path, f) for f in files]:
+            os.chmod(f, perms)
+        for d in [os.path.join(path, d) for d in dirs]:
+            os.chmod(d, perms)

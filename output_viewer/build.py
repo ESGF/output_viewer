@@ -6,9 +6,11 @@ from page import Page
 from collections import OrderedDict
 import datetime
 import os
+import stat
+from utils import rechmod
 
 
-def build_viewer(index_path="index.json", diag_name="Output Viewer"):
+def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mask=None):
     try:
         with open(index_path) as index_file:
             spec = json.load(index_file)
@@ -38,9 +40,10 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer"):
     spec = spec["specification"]
 
     path = os.path.dirname(index_path)
+
     pages = []
     for ind, plotspec in enumerate(spec):
-        page = Page(plotspec, root_path=path)
+        page = Page(plotspec, root_path=path, permissions=default_mask)
         page_name = page.short_name if page.short_name else "set_%d" % (ind + 1)
         pages.append((page, page_name))
 
@@ -58,6 +61,7 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer"):
     grid = col.append_tag('div', class_="img_links")
     table.append_header().append_cell("Output Sets")
     icons = []
+
     for page, page_name in pages:
         page.build(page_name, toolbar)
         page_path = os.path.join(page_name, "index.html")
@@ -71,10 +75,14 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer"):
     with open(os.path.join(path, "index.html"), "w") as f:
         toolbar.setLevel(0)
         f.write(doc.build())
+        os.chmod(os.path.join(path, "index.html"), default_mask)
 
     static_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static")
-
     viewer_dir = os.path.join(path, "viewer")
+
     if os.path.exists(viewer_dir):
         shutil.rmtree(viewer_dir)
+
     shutil.copytree(static_dir, viewer_dir)
+
+    rechmod(viewer_dir)
