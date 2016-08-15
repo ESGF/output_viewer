@@ -85,4 +85,5 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
 
     shutil.copytree(static_dir, viewer_dir)
 
-    rechmod(viewer_dir)
+    if default_mask is not None:
+        rechmod(viewer_dir, default_mask)
