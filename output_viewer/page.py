@@ -185,7 +185,7 @@ class Page(object):
             group_obj = Group(self.root_path, dirname, group, rows)
 
             for row_ind, r in enumerate(rows):
-                tr = table.append_row()
+                tr = table.append_row(class_="output-row")
                 cell = TableCell()
                 cell.append_formatted("<span>%s</span>" % r["title"])
                 tr.append(cell)
