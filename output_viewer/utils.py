@@ -21,6 +21,7 @@ def nuke_and_pave(path):
 
 
 def rechmod(path, perms):
+    os.chmod(path, perms)
     for path, dirs, files in os.walk(path):
         for f in [os.path.join(path, f) for f in files]:
             os.chmod(f, perms)
