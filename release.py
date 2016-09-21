@@ -33,7 +33,7 @@ repo = git.Repo(".")
 repo.index.add(["conda_build/meta.yaml", "setup.py"])
 c = repo.index.commit("Bump to version %s." % args.version)
 
-tag_message = ["Version %s\n" % args.version, "Changes:"]
+tag_message = ["Version %s\n\nChanges:" % args.version]
 
 last_tag = repo.tags[-1]
 last_tag_commit = last_tag.commit
