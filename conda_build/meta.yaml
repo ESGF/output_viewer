@@ -1,9 +1,9 @@
 package:
   name: output_viewer
-  version: 1.0.6
+  version: 1.0.7
 
 source:
-  git_rev: v1.0.6
+  git_rev: v1.0.7
   git_url: git://github.com/ESGF/output_viewer.git
 
 requirements:
