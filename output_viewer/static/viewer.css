@@ -29,6 +29,9 @@
 
 .img_display {
 	margin: auto;
+}
+
+.img_display>div {
 	max-width: 600px;
 }
 
