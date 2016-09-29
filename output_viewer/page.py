@@ -24,11 +24,11 @@ class Column(object):
 
         row = container.append_tag('div', class_="row")
         col = row.append_tag("div", class_="col-sm-12")
-        # Root/Plotset/Group/Row/this.html
+        # Root/Page/Group/Row/this.html
         file_url = os.path.join("..", "..", "..", self.path)
         file_div = col.append_tag("div", class_="img_display")
         if is_img(self.path):
-            file_div.append_tag('div').append_tag("img", src=file_url)
+            file_div.append_tag("img", src=file_url)
         link = file_div.append_tag('div').append_tag("a", href=file_url, download="")
         link.append("Download File")
 
