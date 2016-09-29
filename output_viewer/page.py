@@ -1,4 +1,4 @@
-from .htmlbuilder import Document, Table, TableCell, Link, Span
+from .htmlbuilder import Document, Table, TableCell, Link, Span, HTMLBuilder
 import os
 from .examine import is_img, is_data
 from .utils import slugify, nuke_and_pave, rechmod
@@ -32,16 +32,17 @@ class Column(object):
         link = file_div.append_tag('div').append_tag("a", href=file_url, download="")
         link.append("Download File")
 
-        table = Table()
+        disclose_div = container.append_tag("div", class_="disclosable row", data={"title": "Output Metadata"})
+        table = Table(class_="table")
         header = table.append_header()
-        header.append_cell("Metadata Key")
+        header.append_cell("Metadata Key", style="min-width: 15%;")
         header.append_cell("Metadata Value")
         for k, v in self.meta.iteritems():
             r = table.append_row()
             r.append_cell(k)
             r.append_cell(v)
 
-        container.append_tag("div", class_="row").append(table)
+        disclose_div.append(table)
 
         html_path = os.path.join(self.row.group.dirpath, self.row.title, slugify(self.title) + ".html")
         with open(html_path, "w") as out:
