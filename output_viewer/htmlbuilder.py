@@ -111,14 +111,14 @@ class Document(HTMLBuilder):
     def __init__(self, title=None, level=0):
         # Adjust for nesting level
         self._scripts = []
-        for script in ["viewer/jquery-2.2.3.min.js", "viewer/bootstrap.min.js", "viewer/viewer.js"]:
-            self._scripts.append(os.path.join(*([".."] * level + [script])))
+        for script in ["jquery-2.2.3.min.js", "bootstrap.min.js", "viewer.js"]:
+            self._scripts.append(os.path.join(*([".."] * level + ["viewer", "js", script])))
 
         self._stylesheets = []
-        for sheet in ["viewer/bootstrap.min.css", "viewer/viewer.css"]:
-            self._stylesheets.append(os.path.join(*([".."] * level + [sheet])))
+        for sheet in ["bootstrap.min.css", "viewer.css"]:
+            self._stylesheets.append(os.path.join(*([".."] * level + ["viewer", "css", sheet])))
 
-        self._metas = [{"name": "viewport", "content": "width=device-width, intial-scale=1"}]
+        self._metas = [{"name": "viewport", "content": "width=device-width, intial-scale=1"}, {"charset": "utf-8"}]
         self.children = []
         self._formatted = []
         self._attrs = {}
