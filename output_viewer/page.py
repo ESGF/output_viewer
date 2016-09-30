@@ -175,6 +175,13 @@ class Page(object):
             b.append_formatted(self.long_desc)
         row.append_tag("hr")
 
+        # Area for the group combobox
+        row = container.append_tag("div", class_="row")
+        col = row.append_tag("div", class_="col-sm-12")
+        label = col.append_tag("label")
+        label.append("Jump To:")
+        select = col.append_tag("select", class_="form-control group_navigator")
+
         # Start the actual body of the output set
         row = container.append_tag("div", class_="row")
         col = row.append_tag("div", class_="col-sm-12")
@@ -185,6 +192,7 @@ class Page(object):
             group = self.groups[group_ind]
             column_names = group["columns"]
             group_title = group["title"]
+            select.append_tag("option", value="group_%d" % group_ind).append(group_title)
 
             # Pad the columns so they're appropriately spaced
             column_widths = [1 for i in range(len(column_names) + 1)]
@@ -197,8 +205,7 @@ class Page(object):
 
             header = table.append_header()
             column_widths = [str(i) for i in column_widths]
-            # Title
-            header.append_cell(group_title)
+            header.append_cell(group_title, id="group_%d" % group_ind)
             for col_ind in range(len(column_names)):
                 header.append_cell(column_names[col_ind], colspan=column_widths[col_ind])
 

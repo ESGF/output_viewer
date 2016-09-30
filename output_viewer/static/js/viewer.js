@@ -68,4 +68,9 @@ $("body").ready(function(){
 			arrow_registry[arrow]();
 		}
 	}
+
+	$(".group_navigator").change(function(){
+		var new_id = $(this).val();
+		window.location.hash = new_id;
+	});
 });
