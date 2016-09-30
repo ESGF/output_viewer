@@ -242,8 +242,16 @@ class BootstrapNavbar(HTMLBuilder):
         navbar_links = container.append_tag("ul", class_="nav navbar-nav")
         for link in links:
             if isinstance(links[link], dict):
-                li = BootstrapDropdown(link, links[link])
-                navbar_links.append(li)
+                if len(links[link]) == 0:
+                    continue
+                elif len(links[link]) == 1:
+                    title, url = links[link].items()[0]
+                    li = navbar_links.append_tag("li")
+                    a = li.append_tag("a", href=url)
+                    a.append(title)
+                else:
+                    li = BootstrapDropdown(link, links[link])
+                    navbar_links.append(li)
             else:
                 li = navbar_links.append_tag("li")
                 a = li.append_tag("a", href=links[link])
