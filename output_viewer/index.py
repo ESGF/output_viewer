@@ -128,7 +128,7 @@ class OutputRow(object):
 
 
 class OutputFile(object):
-    def __init__(self, path, meta=None, title=None):
+    def __init__(self, path, meta=None, title=None, other_files=None):
         self.path = path
         if meta is None:
             self.meta = {}
@@ -136,12 +136,16 @@ class OutputFile(object):
             self.meta = meta
 
         self.title = title
+        self.other_files = other_files
+        if self.other_files is None:
+            self.other_files = []
 
     def toDict(self):
         return {
             "path": self.path,
             "title": self.title,
-            "meta": self.meta
+            "meta": self.meta,
+            "files": self.other_files
         }
 
 

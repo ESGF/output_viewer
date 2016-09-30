@@ -4,6 +4,14 @@ from .examine import is_img, is_data
 from .utils import slugify, nuke_and_pave, rechmod
 
 
+file_extensions = {
+    ".nc": "NetCDF File",
+    ".pdf": "PDF",
+    ".svg": "Vector Image",
+    ".png": "Bitmap Image"
+}
+
+
 class Column(object):
     def __init__(self, row, spec):
         self.row = row
@@ -12,6 +20,7 @@ class Column(object):
         if self.title is None:
             self.title = os.path.basename(os.path.splitext(self.path)[0])
         self.meta = spec.get("meta", {})
+        self.files = spec.get("files", [])
 
     def build(self, toolbar):
         doc = Document(title=self.title, level=3)
@@ -40,13 +49,26 @@ class Column(object):
 
         row = container.append_tag('div', class_="row")
         col = row.append_tag("div", class_="col-sm-12")
-        # Root/Page/Group/Row/this.html
-        file_url = os.path.join("..", "..", "..", self.path)
+
         file_div = col.append_tag("div", class_="img_display")
+        file_url = os.path.join("..", "..", "..", self.path)
         if is_img(self.path):
             file_div.append_tag("img", src=file_url)
-        link = file_div.append_tag('div').append_tag("a", href=file_url, download="")
-        link.append("Download File")
+
+        all_files = [{"title": "File Shown", "url": self.path}] + self.files
+        file_links = file_div.append_tag('ul', class_="horizontal_list separated")
+        for i, f in enumerate(all_files):
+            # Root/Page/Group/Row/this.html
+            file_url = os.path.join("..", "..", "..", f["url"])
+            link = file_links.append_tag("li").append_tag("a", href=file_url, download="")
+            t = f.get("title")
+            if t is None:
+                _, t = os.path.splitext(f["url"])
+                if t in file_extensions:
+                    t = file_extensions[t]
+                else:
+                    t += " File"
+            link.append("Download " + t)
 
         disclose_div = container.append_tag("div", class_="disclosable row", data={"title": "Output Metadata"})
         table = Table(class_="table")

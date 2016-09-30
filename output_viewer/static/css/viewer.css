@@ -116,3 +116,12 @@
 .next {
 	right: 0;
 }
+
+.horizontal_list > li{
+	float:left;
+	margin-right: 1.5em;
+}
+
+ul.separated > li:first-child {
+	list-style-type: none;
+}
