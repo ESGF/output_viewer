@@ -125,3 +125,9 @@
 ul.separated > li:first-child {
 	list-style-type: none;
 }
+
+.download_urls {
+	width: 300px;
+	margin: 0 10px;
+	display: inline-block;
+}

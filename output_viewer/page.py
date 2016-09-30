@@ -34,7 +34,7 @@ class Column(object):
         container = doc.append_tag("div", class_="container")
         row = container.append_tag("div", class_="row")
 
-        if col_ind > 0:
+        if col_ind > min(self.row.cols.keys()):
             back = doc.append_tag("form", action=self.row.cols[col_ind - 1].getFileName(), class_="col_link back")
             link_back = back.append_tag("button", type="submit", data={"arrow": "left"})
             link_back.append("<")
@@ -56,11 +56,18 @@ class Column(object):
             file_div.append_tag("img", src=file_url)
 
         all_files = [{"title": "File Shown", "url": self.path}] + self.files
-        file_links = file_div.append_tag('ul', class_="horizontal_list separated")
+
+        file_downloads = file_div.append_tag("div")
+        file_downloads.append_tag("label").append("Files:")
+        s = file_downloads.append_tag("select", class_="form-control download_urls")
+        download_link = file_downloads.append_tag("a", class_="btn btn-primary download_link", download="")
+        download_link.append("Download")
         for i, f in enumerate(all_files):
             # Root/Page/Group/Row/this.html
             file_url = os.path.join("..", "..", "..", f["url"])
-            link = file_links.append_tag("li").append_tag("a", href=file_url, download="")
+            if i == 0:
+                download_link._attrs["href"] = file_url
+            option = s.append_tag("option", value=file_url)
             t = f.get("title")
             if t is None:
                 _, t = os.path.splitext(f["url"])
@@ -68,7 +75,7 @@ class Column(object):
                     t = file_extensions[t]
                 else:
                     t += " File"
-            link.append("Download " + t)
+            option.append(t)
 
         disclose_div = container.append_tag("div", class_="disclosable row", data={"title": "Output Metadata"})
         table = Table(class_="table")

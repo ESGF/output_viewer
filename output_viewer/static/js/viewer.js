@@ -73,4 +73,9 @@ $("body").ready(function(){
 		var new_id = $(this).val();
 		window.location.hash = new_id;
 	});
+
+	$(".download_urls").change(function(){
+		var new_url = $(this).val();
+		$(".download_link").attr("href", new_url);
+	})
 });
