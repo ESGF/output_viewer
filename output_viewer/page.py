@@ -17,8 +17,24 @@ class Column(object):
         doc = Document(title=self.title, level=3)
         if toolbar is not None:
             doc.append(toolbar)
+
+        for col_ind, col in self.row.cols.iteritems():
+            if col == self:
+                break
+
         container = doc.append_tag("div", class_="container")
         row = container.append_tag("div", class_="row")
+
+        if col_ind > 0:
+            back = doc.append_tag("form", action=self.row.cols[col_ind - 1].getFileName(), class_="col_link back")
+            link_back = back.append_tag("button", type="submit")
+            link_back.append("<")
+
+        if col_ind < max(self.row.cols.keys()):
+            n = doc.append_tag("form", action=self.row.cols[col_ind + 1].getFileName(), class_="col_link next")
+            link_next = n.append_tag("button", type="submit")
+            link_next.append(">")
+
         title = row.append_tag("h1", class_="img_title")
         title.append(self.title)
 
@@ -50,8 +66,11 @@ class Column(object):
                 toolbar.setLevel(3)
             out.write(doc.build())
 
+    def getFileName(self):
+        return slugify(self.title) + ".html"
+
     def getURL(self):
-        return os.path.join(self.row.dirname, slugify(self.title) + ".html")
+        return os.path.join(self.row.dirname, self.getFileName())
 
     def getLink(self, level):
         path = os.path.join(os.path.dirname(os.path.dirname(self.row.group.dirpath)), self.path)
