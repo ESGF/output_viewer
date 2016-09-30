@@ -27,12 +27,12 @@ class Column(object):
 
         if col_ind > 0:
             back = doc.append_tag("form", action=self.row.cols[col_ind - 1].getFileName(), class_="col_link back")
-            link_back = back.append_tag("button", type="submit")
+            link_back = back.append_tag("button", type="submit", data={"arrow": "left"})
             link_back.append("<")
 
         if col_ind < max(self.row.cols.keys()):
             n = doc.append_tag("form", action=self.row.cols[col_ind + 1].getFileName(), class_="col_link next")
-            link_next = n.append_tag("button", type="submit")
+            link_next = n.append_tag("button", type="submit", data={"arrow": "right"})
             link_next.append(">")
 
         title = row.append_tag("h1", class_="img_title")

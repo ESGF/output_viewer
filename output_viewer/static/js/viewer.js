@@ -32,4 +32,40 @@ $("body").ready(function(){
 			title_area.toggleClass(down_arrow).toggleClass(right_arrow);
 		});
 	});
+
+	var arrow_registry = {
+		"left": undefined,
+		"right": undefined,
+		"down": undefined,
+		"up": undefined
+	};
+
+	$("*[data-arrow]").each(function(){
+		var self = $(this);
+		var arrow = self.attr("data-arrow");
+		var f = function() {self.click();};
+		arrow_registry[arrow] = f;
+	});
+
+	document.onkeydown = function(e) {
+		var arrow = null;
+		switch (e.keyCode) {
+			case 37:
+				arrow = "left";
+				break;
+			case 39:
+				arrow = "right";
+				break;
+			case 38:
+				arrow = "up";
+				break;
+			case 40:
+				arrow = "down";
+				break;
+		}
+
+		if (arrow_registry[arrow] !== undefined) {
+			arrow_registry[arrow]();
+		}
+	}
 });
