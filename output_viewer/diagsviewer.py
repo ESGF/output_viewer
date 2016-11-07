@@ -49,6 +49,10 @@ class DiagnosticsViewerClient(object):
                                 continue
                             if os.path.exists(os.path.join(directory, col['path'])):
                                 files.append(col['path'])
+                            if "files" in col:
+                                for f in col["files"]:
+                                    if os.path.exists(os.path.join(directory, f["url"])):
+                                        files.append(f["url"])
                         else:
                             if os.path.exists(os.path.join(directory, col)) and col != '':
                                 files.append(col)
