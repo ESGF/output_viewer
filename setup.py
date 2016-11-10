@@ -13,5 +13,5 @@ setup(
     install_requires=["requests"],
     packages=find_packages(),
     include_package_data=True,
-    scripts=["scripts/view_output", "scripts/view_output.py", "scripts/upload_output", "scripts/upload_output.py", "scripts/login_viewer", "scripts/login_viewer.py"]
+    scripts=["scripts/view_output", "scripts/view_output.py", "scripts/upload_output", "scripts/upload_output.py", "scripts/login_viewer", "scripts/login_viewer.py", "scripts/quick_view", "scripts/quick_view.py"]
 )

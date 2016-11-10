@@ -16,7 +16,6 @@ class TreeProxy(object):
         if tagname not in self.open:
             raise ValueError("Can't close tag '%s'; no open tag found.")
         while tagname != self.open[-1]:
-            print tagname, self.open[-1]
             # Close all of the tags that are open that should have been closed.
             self.builder.end(self.open.pop())
         self.open.pop()

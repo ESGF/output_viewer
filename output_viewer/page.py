@@ -252,7 +252,7 @@ class Page(object):
                     try:
                         tr.append_cell(l, colspan=column_widths[col_ind])
                     except IndexError:
-                        print column_widths, col_ind
+                        pass
             group_obj.build(toolbar)
 
         with open(os.path.join(self.root_path, dirname, "index.html"), "w") as outfile:

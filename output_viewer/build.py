@@ -15,7 +15,6 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
         with open(index_path) as index_file:
             spec = json.load(index_file)
     except Exception as e:
-        raise e
         print "Unable to load index file at '%s'. Please make sure it's a valid JSON file." % index_path
         sys.exit()
 
