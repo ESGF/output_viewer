@@ -36,6 +36,8 @@ class DiagnosticsViewerClient(object):
         version = slugify(index["version"])
 
         cwd_cache = os.getcwd()
+        if directory[-1] == "/":
+            directory = directory[:-1]
         os.chdir(os.path.dirname(directory))
         file_root = os.path.basename(directory)
         files = ["index.json"]
