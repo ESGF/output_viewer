@@ -2,7 +2,7 @@ about:
   home: http://gitub.com/ESGF/output_viewer
 package:
   name: output_viewer
-  version: 1.2.0
+  version: 1.2.1
 requirements:
   build:
   - python
@@ -12,5 +12,5 @@ requirements:
   - python
   - requests
 source:
-  git_rev: v1.2.0
+  git_rev: v1.2.1
   git_url: git://github.com/ESGF/output_viewer.git
