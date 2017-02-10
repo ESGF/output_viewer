@@ -67,6 +67,7 @@ class DiagnosticsViewerClient(object):
         return ds_id
 
     def upload_files(self, dataset, files):
+        os.chdir('..')
         files_remaining = list(files)
         s = requests.Session()
         ds_id = None
