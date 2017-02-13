@@ -21,7 +21,7 @@ class DiagnosticsViewerClient(object):
     def login(self, username, password):
         credentials = requests.post(self.server + "/ea_services/credentials/%s/" % username, data={"password": password}, verify=self.cert)
         if credentials.status_code != 200:
-            raise ValueError("Username/Password invalid.")
+            raise ValueError("Unable to login: Status Code %d; message:\n%s\n" % (credentials.status_code, credentials.text))
 
         creds = credentials.json()
         self.id = creds["id"]
