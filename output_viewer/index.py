@@ -1,5 +1,6 @@
 import json
 from collections import OrderedDict
+import datetime
 
 
 class OutputIndex(object):
@@ -16,6 +17,8 @@ class OutputIndex(object):
         obj = {"title": self.title, "specification": [page.toDict() for page in self.pages]}
         if self.version:
             obj["version"] = self.version
+        else:
+            obj["version"] = datetime.datetime.now().strftime("%Y-%m-%d-%H-%M")
         obj["output_viewer_version"] = "1"
         if self.menu:
             menus = []
