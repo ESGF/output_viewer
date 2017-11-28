@@ -40,7 +40,7 @@ if __name__ == "__main__":
         user_key = cfg.get(server, "key")
 
         if None in (user_id, user_key):
-            print "No username/password provided and no cached credentials available for server %s. To provide username/password, use the --user option and enter your password when prompted." % server
+            print("No username/password provided and no cached credentials available for server %s. To provide username/password, use the --user option and enter your password when prompted." % server)
             sys.exit(1)
 
         client.id = user_id

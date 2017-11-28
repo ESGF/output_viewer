@@ -4,5 +4,5 @@ import json
 ind = OutputIndex("Test Package")
 blob = ind.toJSON("/tmp/index.json")
 f = json.load(open("/tmp/index.json"))
-print f["version"]
+print(f["version"])
 

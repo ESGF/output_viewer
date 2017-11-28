@@ -67,7 +67,7 @@ class HTMLBuilder(object):
 
     def attrs(self):
         clean_attrs = {}
-        for attr, value in self._attrs.iteritems():
+        for attr, value in self._attrs.items():
             attr = attr.strip("_")
             if isinstance(value, dict):
                 for k in value:
@@ -95,7 +95,7 @@ class HTMLBuilder(object):
                         parser.feed(child)
                         proxy.cleanup()
                     except Exception as e:
-                        print "Bad formatting", e
+                        print("Bad formatting", e)
                         root.data(str(child))
                 else:
                     root.data(str(child))
@@ -244,7 +244,7 @@ class BootstrapNavbar(HTMLBuilder):
                 if len(links[link]) == 0:
                     continue
                 elif len(links[link]) == 1:
-                    title, url = links[link].items()[0]
+                    title, url = list(links[link].items())[0]
                     li = navbar_links.append_tag("li")
                     a = li.append_tag("a", href=url)
                     a.append(title)

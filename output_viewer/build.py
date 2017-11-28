@@ -1,13 +1,13 @@
-from htmlbuilder import Document, BootstrapNavbar, Table, Link
+from .htmlbuilder import Document, BootstrapNavbar, Table, Link
 import shutil
 import json
 import sys
-from page import Page
+from .page import Page
 from collections import OrderedDict
 import datetime
 import os
 import stat
-from utils import rechmod
+from .utils import rechmod
 
 
 def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mask=None):
@@ -15,7 +15,7 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
         with open(index_path) as index_file:
             spec = json.load(index_file)
     except Exception as e:
-        print "Unable to load index file at '%s'. Please make sure it's a valid JSON file." % index_path
+        print(("Unable to load index file at '%s'. Please make sure it's a valid JSON file." % index_path))
         sys.exit()
 
     if "title" in spec:

@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import sys
 import os
 import glob
@@ -13,7 +13,7 @@ class ViewerConfig(object):
         self.path = os.path.expanduser("~/.output_viewer")
         if not os.path.exists(self.path):
             os.mkdir(self.path)
-        self.parser = ConfigParser.SafeConfigParser()
+        self.parser = configparser.SafeConfigParser()
         for f in glob.iglob(os.path.join(self.path, "*.cfg")):
             with open(f) as fp:
                 self.parser.readfp(fp)
@@ -31,7 +31,7 @@ class ViewerConfig(object):
 
     def extract_section(self, section, cfg=None):
         if cfg is None:
-            cfg = ConfigParser.SafeConfigParser()
+            cfg = configparser.SafeConfigParser()
         if self.parser.has_section(section):
             options = self.parser.options(section)
         else:
@@ -53,7 +53,7 @@ class ViewerConfig(object):
             new_cfg.write(upload_file)
 
         with open(os.path.join(self.path, "servers.cfg"), "w") as server_file:
-            cfg = ConfigParser.SafeConfigParser()    
+            cfg = configparser.SafeConfigParser()    
             for section in self.parser.sections():
                 if section == "upload":
                     continue
