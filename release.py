@@ -46,5 +46,5 @@ while (commit.binsha != last_tag_commit.binsha):
     commit = commit.parents[0]
 
 repo.create_tag("v" + args.version, ref=c, message="\n - ".join(tag_message))
-print "Successfully created tag %s" % ("v" + args.version)
-print "Please review the tag and push to GitHub."
+print("Successfully created tag %s" % ("v" + args.version))
+print("Please review the tag and push to GitHub.")

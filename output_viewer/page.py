@@ -27,7 +27,7 @@ class Column(object):
         if toolbar is not None:
             doc.append(toolbar)
 
-        for col_ind, col in self.row.cols.iteritems():
+        for col_ind, col in self.row.cols.items():
             if col == self:
                 break
 
@@ -82,7 +82,7 @@ class Column(object):
         header = table.append_header()
         header.append_cell("Metadata Key", style="min-width: 15%;")
         header.append_cell("Metadata Value")
-        for k, v in self.meta.iteritems():
+        for k, v in self.meta.items():
             r = table.append_row()
             r.append_cell(k)
             r.append_cell(v)
@@ -133,7 +133,7 @@ class Row(object):
 
     def build(self, toolbar):
         nuke_and_pave(os.path.join(self.group.dirpath, self.title))
-        for _, col in self.cols.iteritems():
+        for _, col in self.cols.items():
             col.build(toolbar)
 
 
@@ -169,7 +169,7 @@ class Page(object):
         groups = spec.get("groups", [])
         self.groups = []
         for g in groups:
-            if isinstance(g, (str, unicode)):
+            if isinstance(g, str):
                 self.groups.append({"title": g, "columns": columns})
             elif isinstance(g, dict):
                 if "columns" not in g:

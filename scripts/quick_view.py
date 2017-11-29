@@ -71,16 +71,16 @@ if dataset is None:
     dataset = "%d-%d-%d" % (d.year, d.month, d.day)
 
 index = viewer.OutputIndex(title, version=dataset)
-for page, groups in indexed.items():
+for page, groups in list(indexed.items()):
     p = viewer.OutputPage(page)
     index.addPage(p)
-    for group, rows in groups.items():
+    for group, rows in list(groups.items()):
         g = viewer.OutputGroup(group)
         group_ind = len(p.groups)
         p.addGroup(g)
-        for row, columns in rows.items():
+        for row, columns in list(rows.items()):
             cols = []
-            for col, files in columns.items():
+            for col, files in list(columns.items()):
                 default_file = None
                 for f in files:
                     if args.suffix:
@@ -98,7 +98,7 @@ for page, groups in indexed.items():
 index_path = os.path.abspath(args.image_directory + "/index.json")
 index.toJSON(index_path)
 build_viewer(index_path)
-should_open = raw_input("Open viewer in browser? [y]/n: ")
+should_open = input("Open viewer in browser? [y]/n: ")
 if should_open != "n":
     import webbrowser
     webbrowser.open("file://" + os.path.abspath(args.image_directory + "/index.html"))
