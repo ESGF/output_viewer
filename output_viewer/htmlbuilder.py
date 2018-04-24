@@ -103,7 +103,7 @@ class HTMLBuilder(object):
 
         if was_root:
             root = root.close()
-            return tostring(root, method="html")
+            return str(tostring(root, method="html").decode('utf-8'))
 
 
 class Document(HTMLBuilder):
