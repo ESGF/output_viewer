@@ -158,7 +158,7 @@ class Document(HTMLBuilder):
         super(Document, self).build(root=root)
         root.end("html")
         root = root.close()
-        return "<!DOCTYPE html>\n%s" % tostring(root, method="html")
+        return "<!DOCTYPE html>\n%s" % str(tostring(root, method="html").decode('utf-8'))
 
 
 class TableCell(HTMLBuilder):
