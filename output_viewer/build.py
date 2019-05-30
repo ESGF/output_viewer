@@ -10,13 +10,63 @@ import stat
 from .utils import rechmod
 
 
-def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mask=None):
+def open_specs(index_path):
+    """
+    Open return the specs json at index_path.
+    """
     try:
         with open(index_path) as index_file:
-            spec = json.load(index_file)
-    except Exception as e:
+            return json.load(index_file)
+    except:
         print(("Unable to load index file at '%s'. Please make sure it's a valid JSON file." % index_path))
         sys.exit()
+
+def copy_and_edit_path(path, default_mask):
+    """
+    At the given path, copy it and modify it
+    so its contents can be viewed correctly.
+    """
+    static_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static")
+    viewer_dir = os.path.join(path, "viewer")
+
+    if os.path.exists(viewer_dir):
+        shutil.rmtree(viewer_dir)
+
+    shutil.copytree(static_dir, viewer_dir)
+
+    if default_mask is not None:
+        rechmod(viewer_dir, default_mask)
+
+def build_page(output_page, index_path="index.json", default_mask=None):
+    """
+    Given an OutputPage object, generate and return the
+    location of the HTML page.
+    """
+    spec = open_specs(index_path)
+    spec = spec["specification"]
+
+    path = os.path.dirname(index_path)
+
+    page_path = None
+    for plotspec in spec:
+        if plotspec['short_name'] == output_page.short_name:
+            page = Page(plotspec, root_path=path, permissions=default_mask)
+            page.build(page.short_name)
+            page_path = os.path.join(page.short_name, "index.html")
+
+    if not page_path:
+        msg = "The current page's name isn't in the specs json."
+        raise RuntimeError(msg)
+
+    copy_and_edit_path(path, default_mask)
+
+    return page_path
+
+def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mask=None):
+    """
+    Build the viewer based on the index_path.
+    """
+    spec = open_specs(index_path)
 
     if "title" in spec:
         diag_name = spec["title"]
@@ -30,11 +80,6 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
                     menu[m["title"]][menu_item["title"]] = menu_item["url"]
             else:
                 menu[m["title"]] = m["url"]
-
-    if "version" in spec:
-        version = spec["version"]
-    else:
-        version = datetime.datetime.today().strftime("%Y-%m-%d")
 
     spec = spec["specification"]
 
@@ -59,7 +104,6 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
     col = row.append_tag('div', class_="col-sm-5")
     grid = col.append_tag('div', class_="img_links")
     table.append_header().append_cell("Output Sets")
-    icons = []
 
     for page, page_name in pages:
         page.build(page_name, toolbar)
@@ -77,13 +121,4 @@ def build_viewer(index_path="index.json", diag_name="Output Viewer", default_mas
         if default_mask is not None:
             os.chmod(os.path.join(path, "index.html"), default_mask)
 
-    static_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), "static")
-    viewer_dir = os.path.join(path, "viewer")
-
-    if os.path.exists(viewer_dir):
-        shutil.rmtree(viewer_dir)
-
-    shutil.copytree(static_dir, viewer_dir)
-
-    if default_mask is not None:
-        rechmod(viewer_dir, default_mask)
+    copy_and_edit_path(path, default_mask)
