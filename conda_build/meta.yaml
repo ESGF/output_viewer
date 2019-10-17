@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/esgf/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 5d91c424ce2f6a90297e882ef9b80585aa16e2665ddd10a8cbd25219cccf05bd
+  sha256: 8bcd35d602f51a71d7b6a243f0d5c49d1e3c6c445bb9664dcce7d61dc08509e1
 
 build:
     number: 0
@@ -43,3 +43,4 @@ extra:
         - doutriaux1
         - zshaheen
         - xylar
+        - chengzhuzhang
