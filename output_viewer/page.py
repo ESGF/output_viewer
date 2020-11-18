@@ -243,7 +243,7 @@ class Page(object):
             for row_ind, r in enumerate(rows):
                 tr = table.append_row(class_="output-row")
                 cell = TableCell()
-                cell.append_formatted("<span>%s</span>" % r["title"])
+                cell.append_formatted(r["title"])
                 tr.append(cell)
                 for col_ind, col in enumerate(r["columns"]):
                     l = group_obj.getLink(row_ind, col_ind, 1)
