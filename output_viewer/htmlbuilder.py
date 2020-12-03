@@ -95,7 +95,7 @@ class HTMLBuilder(object):
                         parser.feed(child)
                         proxy.cleanup()
                     except Exception as e:
-                        print("Bad formatting", e)
+                        #print("Bad formatting", e)
                         root.data(str(child))
                 else:
                     root.data(str(child))
