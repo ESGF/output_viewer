@@ -11,8 +11,8 @@ def slugify(value):
     """
     value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
     value = value.decode('utf-8')
-    value = str(re.sub('[^\w\s-]', '', str(value)).strip().lower())
-    return re.sub('[-\s]+', '-', str(value))
+    value = str(re.sub(r'[^\w\s-]', '', str(value)).strip().lower())
+    return re.sub(r'[-\s]+', '-', str(value))
 
 
 def nuke_and_pave(path):
